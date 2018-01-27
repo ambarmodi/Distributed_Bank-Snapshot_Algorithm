@@ -22,7 +22,7 @@ The controller will distribute the total amount of money evenly among all branch
 The distributed bank has multiple branches. Every branch knows about all other branches. A single TCP connection is setup between every pair of branches. Each branch starts with an initial balance (allocated by the controller). The branch then randomly selects another destination branch and sends a random amount of money to this destination branch at unpredictable times.
 
 -----------------------------------------------------------------------
-## Implemntation details:
+## Implementation details:
 Chandy-Lamport global snapshot algorithm take global snapshots of your bank. In case of the distributed bank, a global snapshot will contain both the local state of each branch (i.e., its balance) and the amount of money in transit on all communication channels. Each branch will be responsible for recording and reporting its own local state (balance) as well as the total money in transit on each of its incoming channels.
 For simplicity, in this assignment, the controller will contact one of the branches to initiate the global snapshot. It does so by sending a message indicating the InitSnapshot operation to the selected branch. The selected branch will then initiate the snapshot by first recording its own local state and send out Marker messages to all other branches. After some time (long enough for the snapshot algorithm to finish), the controller sends
 RetrieveSnapshot messages to all branches to retrieve their recorded local and channel states. 
